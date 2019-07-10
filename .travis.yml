@@ -242,6 +242,7 @@ install:
           phpenv global $PHP
           ([[ $deps ]] && cd src/Symfony/Component/HttpFoundation; composer config platform.ext-mongodb 1.6.0; composer require --dev --no-update mongodb/mongodb)
           tfold 'composer update' $COMPOSER_UP
+          rm -fr vendor/symfony/phpunit-bridge -fr && cp -r src/Symfony/Bridge/PhpUnit/ vendor/symfony/phpunit-bridge
           tfold 'phpunit install' ./phpunit install
           if [[ $deps = high ]]; then
               echo "$COMPONENTS" | parallel --gnu "tfold {} 'cd {} && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
